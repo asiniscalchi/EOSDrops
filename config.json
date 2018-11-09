@@ -9,5 +9,7 @@
   "batchSize":50,
   "limitCap":0,
   "decimals":4,
-  "snapshotFile":"./snapshot.csv"
+  "snapshotFile":"./snapshot.csv",
+  "snapshotFileAccountColumn":1,
+  "snapshotFileAmountColumn":3
 }

@@ -117,7 +117,10 @@ const run = async () => {
     asserter(config.ratio > 0, 'Ratio can not be less than 0');
     asserter(config.batchSize > 0, 'Batch size must be greater than 0');
     asserter(config.snapshotFile !== '', 'Snapshot file has to be specified');
-    asserter(fs.existsSync(config.snapshotFile), 'Snaphost file doesn\'t exist')
+    asserter(fs.existsSync(config.snapshotFile), 'Snaphost file doesn\'t exist');
+    asserter(config.snapshotFileAccountColumn >= 0, 'account column not specified');
+    asserter(config.snapshotFileAmountColumn >= 0, 'amount column not specified');
+
 
     await EOSTools.setNetwork(config.network);
     if (!await EOSTools.fillTokenStats(config)) {
@@ -128,7 +131,7 @@ const run = async () => {
     const { snapshotFile } = config;
     console.log("Using snapshotFile : " + snapshotFile);
     const snapshot = await SnapshotTools.getCSV(snapshotFile);
-    const initialAccountBalances = SnapshotTools.csvToJson(snapshot);
+    const initialAccountBalances = SnapshotTools.csvToJson(snapshot, config.snapshotFileAccountColumn, config.snapshotFileAmountColumn);
     const accountBalances = await filterLists(initialAccountBalances);
     const ratioBalances = accountBalances.map(tuple => Object.assign(tuple, {amount:getRatio(tuple)}))
                           .filter(tuple => tuple.amount > 0);

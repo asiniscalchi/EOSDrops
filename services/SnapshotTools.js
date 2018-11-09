@@ -20,9 +20,9 @@ exports.getCSV = (pathToCSV) => {
  * @param csv
  * @returns {Array}
  */
-exports.csvToJson = (csv, file) => {
+exports.csvToJson = (csv, accountIndex, amountIndex) => {
     const result = Papa.parse(csv);
-    const tupled = result.data.map(r => ({account: r[1], amount: r[3]}))
+    const tupled = result.data.map(r => ({account: r[accountIndex], amount: r[amountIndex]}))
     return tupled;
 };
 
