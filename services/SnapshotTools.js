@@ -1,4 +1,5 @@
 const fs = require('fs');
+const Papa = require('papaparse');
 
 /***
  * Pulls CSV from file system at a given path
