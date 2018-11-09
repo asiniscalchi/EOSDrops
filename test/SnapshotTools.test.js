@@ -8,5 +8,15 @@ describe('parsing csv', () => {
         assert.equal(result[0].account, 'b1');
         assert.equal(result[0].amount, '100000000.0100');
     });
+
+    it('parse more lines', async () => {
+        const csv = await SnapshotTools.getCSV('./snapshot.csv');
+        const result = SnapshotTools.csvToJson(csv);
+        assert.equal(result.length, 163930);
+        assert.equal(result[0].account, 'b1');
+        assert.equal(result[0].amount, '100000000.0100');
+        assert.equal(result[1].account, 'gmgenesis111');
+        assert.equal(result[1].amount, '3.2926');
+    })
 });
 
