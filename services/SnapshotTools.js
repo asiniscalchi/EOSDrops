@@ -20,25 +20,9 @@ exports.getCSV = (pathToCSV) => {
  * @param csv
  * @returns {Array}
  */
-exports.csvToJson = (csv) => {
-    const arr = csv
-        .replace(/["]/g, '')
-        .replace(/\n/g,',')
-        .split(',');
-
-    let tupled = [];
-
-    // Removing Ethereum and EOS keys
-    arr.map(e => {
-        if(e.indexOf('0x') !== 0 && e.indexOf('EOS') !== 0) tupled.push(e);
-    });
-
-    // Formatting to {account, amount}
-    tupled = tupled.reduce((acc, e, i) => {
-        if(i % 2 === 0) acc.push({account:e, amount:tupled[i+1]});
-        return acc;
-    }, []);
-
+exports.csvToJson = (csv, file) => {
+    const result = Papa.parse(csv);
+    const tupled = result.data.map(r => ({account: r[1], amount: r[3]}))
     return tupled;
 };
 
