@@ -116,6 +116,8 @@ const run = async () => {
     asserter(config.privateKey !== '', 'Issuer\'s private key must not be empty');
     asserter(config.ratio > 0, 'Ratio can not be less than 0');
     asserter(config.batchSize > 0, 'Batch size must be greater than 0');
+    asserter(config.snapshotFile !== '', 'Snapshot file has to be specified');
+    asserter(fs.existsSync(config.snapshotFile), 'Snaphost file doesn\'t exist')
 
     await EOSTools.setNetwork(config.network);
     if (!await EOSTools.fillTokenStats(config)) {
@@ -123,7 +125,9 @@ const run = async () => {
         process.exit();
     }
 
-    const snapshot = await SnapshotTools.getCSV('snapshot.csv');
+    const { snapshotFile } = config;
+    console.log("Using snapshotFile : " + snapshotFile);
+    const snapshot = await SnapshotTools.getCSV(snapshotFile);
     const initialAccountBalances = SnapshotTools.csvToJson(snapshot);
     const accountBalances = await filterLists(initialAccountBalances);
     const ratioBalances = accountBalances.map(tuple => Object.assign(tuple, {amount:getRatio(tuple)}))

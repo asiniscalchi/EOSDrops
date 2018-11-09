@@ -8,5 +8,6 @@
   "memo":"Fuck Marketing",
   "batchSize":50,
   "limitCap":0,
-  "decimals":4
+  "decimals":4,
+  "snapshotFile":"./snapshot.csv"
 }
