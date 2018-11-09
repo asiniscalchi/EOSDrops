@@ -7,7 +7,7 @@
   "ratio":1,
   "memo":"Fuck Marketing",
   "batchSize":50,
-  "limitCap":0,
+  "limitCap":100000,
   "decimals":4,
   "snapshotFile":"./20181004_account_snapshot_jungle.csv",
   "snapshotFileAccountColumn":1,
