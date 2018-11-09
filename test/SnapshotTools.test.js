@@ -17,6 +17,6 @@ describe('parsing csv', () => {
         assert.equal(result[0].amount, '100000000.0100');
         assert.equal(result[1].account, 'gmgenesis111');
         assert.equal(result[1].amount, '3.2926');
-    })
+    });
 });
 
