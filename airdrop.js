@@ -145,6 +145,9 @@ const run = async () => {
     const ratioBalances = accountBalances.map(tuple => Object.assign(tuple, {amount:getRatio(tuple)}))
                           .filter(tuple => tuple.amount > 0);
 
+                          const p = ratioBalances.find(tuple => (tuple.account === "hezdgmbuhage"))
+                          console.log(p)
+
     const ram = await EOSTools.estimateRAM(accountBalances, config);
     if(await Prompter.prompt(
             `\r\nThis airdrop will require that ${config.issuer} has an estimated minimum of ${ram[0]}KB of RAM, at the cost of ${ram[1]} at the current price of ${ram[2]}. \r\nPress enter to continue`
