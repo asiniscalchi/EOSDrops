@@ -64,6 +64,11 @@ const filterLists = async (snapshot) => {
         `\r\nPress enter if you agree with above blacklist and want to continue (these accounts will be removed from the airdrop)`
     ) !== '') process.exit();
 
+    const { minimumCap } = config;
+    if(minimumCap && minimumCap > 0){
+        
+    }
+
     // apply limit cap ignoring the white listed addresses
     if(config.limitCap && config.limitCap > 0) {
 
@@ -128,8 +133,9 @@ const run = async () => {
         process.exit();
     }
 
-    const { snapshotFile } = config;
-    console.log("Using snapshotFile : " + snapshotFile);
+    const { snapshotFile, minimumCap } = config;
+    logger.info(`(CONFIG) Using snapshotFile : ${snapshotFile}`);
+    logger.info(`(CONFIG) minimum cap: ${minimumCap}`);
     const snapshot = await SnapshotTools.getCSV(snapshotFile);
     const initialAccountBalances = SnapshotTools.csvToJson(snapshot, config.snapshotFileAccountColumn, config.snapshotFileAmountColumn);
     const accountBalances = await filterLists(initialAccountBalances);
