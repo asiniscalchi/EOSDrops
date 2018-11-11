@@ -8,10 +8,10 @@
   "memo":"ADE test",
   "batchSize":50,
   "limitCap":0,
-  "minimumCap":1000,
+  "minimumCap":100,
   "maximumCap":10000,
   "decimals":4,
-  "snapshotFile":"./genesis_snapshot.csv",
+  "snapshotFile":"./20181101_account_snapshot.csv",
   "snapshotFileAccountColumn":1,
-  "snapshotFileAmountColumn":3
+  "snapshotFileAmountColumn":2
 }
