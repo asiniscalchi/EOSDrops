@@ -80,6 +80,20 @@ const filterLists = async (snapshot) => {
             process.exit()
     }
 
+    const { maximumCap } = config;
+    if (maximumCap && maximumCap > 0) {
+        filteredSnapshot = filteredSnapshot.filter(tuple => {
+            if (tuple.amount <= maximumCap)
+                return true;
+
+            logger.warn(`Account ${tuple.account} has ${tuple.amount}: skipped`);
+            return false;
+        })
+        logger.info("Press enter if you agree with above address maximum capped");
+        if (await Prompter.prompt("") !== '')
+            process.exit()
+    }
+
     // apply limit cap ignoring the white listed addresses
     if (config.limitCap && config.limitCap > 0) {
 
@@ -136,21 +150,20 @@ const run = async () => {
         process.exit();
     }
 
-    const { snapshotFile, minimumCap } = config;
+    const { snapshotFile, minimumCap, maximumCap } = config;
     logger.info(`(CONFIG) Using snapshotFile : ${snapshotFile}`);
     logger.info(`(CONFIG) minimum cap: ${minimumCap}`);
+    logger.info(`(CONFIG) maximum cap: ${maximumCap}`);
     const snapshot = await SnapshotTools.getCSV(snapshotFile);
     const initialAccountBalances = SnapshotTools.csvToJson(snapshot, config.snapshotFileAccountColumn, config.snapshotFileAmountColumn);
     const accountBalances = await filterLists(initialAccountBalances);
     const ratioBalances = accountBalances.map(tuple => Object.assign(tuple, {amount:getRatio(tuple)}))
                           .filter(tuple => tuple.amount > 0);
 
-                          const p = ratioBalances.find(tuple => (tuple.account === "hezdgmbuhage"))
-                          console.log(p)
-
     const ram = await EOSTools.estimateRAM(accountBalances, config);
+    const ramAmount = accountBalances.length*0.23438;
     if(await Prompter.prompt(
-            `\r\nThis airdrop will require that ${config.issuer} has an estimated minimum of ${ram[0]}KB of RAM, at the cost of ${ram[1]} at the current price of ${ram[2]}. \r\nPress enter to continue`
+            `\r\nThis airdrop will require that ${config.issuer} has an estimated minimum of ${ramAmount}KB of RAM, at the cost of ${ram[1]} at the current price of ${ram[2]}. \r\nPress enter to continue`
     ) !== '') process.exit();
 
     const total = (ratioBalances.reduce((acc, e) => acc += parseFloat(e.amount), 0)).toFixed(config.decimals);

@@ -5,12 +5,13 @@
   "privateKey":"5KfTg5iPQ3qycY8J4eAgQfxigDPZagGG1Ns2dDbPrVE1oekfKZR",
   "symbol":"ADE",
   "ratio":0.5,
-  "memo":"made with love by ADE",
+  "memo":"ADE test",
   "batchSize":50,
-  "limitCap":250000,
-  "minimumCap":10000,
+  "limitCap":0,
+  "minimumCap":1000,
+  "maximumCap":10000,
   "decimals":4,
-  "snapshotFile":"./20181101_account_snapshot.csv",
+  "snapshotFile":"./genesis_snapshot.csv",
   "snapshotFileAccountColumn":1,
-  "snapshotFileAmountColumn":2
+  "snapshotFileAmountColumn":3
 }
