@@ -80,6 +80,20 @@ const filterLists = async (snapshot) => {
             process.exit()
     }
 
+    const { maximumCap } = config;
+    if (maximumCap && maximumCap > 0) {
+        filteredSnapshot = filteredSnapshot.filter(tuple => {
+            if (tuple.amount <= maximumCap)
+                return true;
+
+            logger.warn(`Account ${tuple.account} has ${tuple.amount}: skipped`);
+            return false;
+        })
+        logger.info("Press enter if you agree with above address maximum capped");
+        if (await Prompter.prompt("") !== '')
+            process.exit()
+    }
+
     // apply limit cap ignoring the white listed addresses
     if (config.limitCap && config.limitCap > 0) {
 
@@ -136,9 +150,10 @@ const run = async () => {
         process.exit();
     }
 
-    const { snapshotFile, minimumCap } = config;
+    const { snapshotFile, minimumCap, maximumCap } = config;
     logger.info(`(CONFIG) Using snapshotFile : ${snapshotFile}`);
     logger.info(`(CONFIG) minimum cap: ${minimumCap}`);
+    logger.info(`(CONFIG) maximum cap: ${maximumCap}`);
     const snapshot = await SnapshotTools.getCSV(snapshotFile);
     const initialAccountBalances = SnapshotTools.csvToJson(snapshot, config.snapshotFileAccountColumn, config.snapshotFileAmountColumn);
     const accountBalances = await filterLists(initialAccountBalances);
