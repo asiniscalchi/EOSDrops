@@ -46,7 +46,7 @@ exports.fillTokenStats = async config => {
     }).then(x => {
         const token = x.rows[0];
         config.decimals = token.max_supply.split(' ')[0].split('.')[1].length;
-        config.issuer = token.issuer;
+        // config.issuer = token.issuer;
         return true;
     }).catch(() => {
         logger.error(`ERROR: Could not get token info from account: '${config.tokenAccount}' for the symbol '${config.symbol}'`);
@@ -125,7 +125,7 @@ const getBalance = async (eos, code, symbol, tuple) => {
 exports.dropTokens = async (accountBalances, config) => {
     const eos = await getEos(config.privateKey);
     const contract = await eos.contract(config.tokenAccount);
-    const auth = {authorization:[`${config.issuer}@active`]};
+    const auth = {authorization:[`${config.authorization}@active`]};
     const lastAccountDropped = lastAccount();
     const startingIndex = lastAccountDropped.length ? accountBalances.findIndex(e => e.account === lastAccountDropped) : 0;
     const accountsFrom = accountBalances.slice(startingIndex, accountBalances.length-1);
@@ -166,7 +166,7 @@ const dropBatch = async (batch, eos, contract, auth, config, tries = 0) => {
         // process.exit();
     }
 
-    const {symbol, tokenAccount, memo, batchSize} = config;
+    const {fromAccount, symbol, tokenAccount, memo, batchSize} = config;
 
 
     let error = null;
@@ -180,7 +180,7 @@ const dropBatch = async (batch, eos, contract, auth, config, tries = 0) => {
     }
 
     const dropped = await contract.transaction(tr => batch.map(tuple =>
-        tr.issue(tuple.account, `${tuple.amount} ${symbol}`, memo, auth)
+        tr.transfer(fromAccount, tuple.account, `${tuple.amount} ${symbol}`, memo, auth)
     )).then(res => res.transaction_id)
       .catch(err  => { error = err; return false; });
 

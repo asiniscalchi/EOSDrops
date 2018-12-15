@@ -1,17 +1,19 @@
 {
-  "chainId":"038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca",
-  "network":"http://dev.cryptolions.io:18888",
-  "tokenAccount":"bsiniscalchi",
+  "chainId":"fdfdfdsf",
+  "network":"https://jungle2.cryptolions.io:443",
+  "tokenAccount":"asiniscalchi",
+  "fromAccount":"cadeosairdrp",
+  "authorization":"cadeosairdrp",
   "privateKey":"5KfTg5iPQ3qycY8J4eAgQfxigDPZagGG1Ns2dDbPrVE1oekfKZR",
   "symbol":"ADE",
   "ratio":0.5,
-  "memo":"ADE test",
+  "memo":"ADE test 2",
   "batchSize":50,
   "limitCap":0,
   "minimumCap":100,
   "maximumCap":10000,
   "decimals":4,
-  "snapshotFile":"./20181101_account_snapshot.csv",
+  "snapshotFile":"./genesis_snapshot.csv",
   "snapshotFileAccountColumn":1,
-  "snapshotFileAmountColumn":2
+  "snapshotFileAmountColumn":3
 }
