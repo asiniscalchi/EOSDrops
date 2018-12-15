@@ -1,7 +1,7 @@
 {
   "chainId":"fdfdfdsf",
-  "network":"https://api.eosnewyork.io:443",
-  "tokenAccount":"buildertoken",
+  "network":"https://jungle2.cryptolions.io:443",
+  "tokenAccount":"asiniscalchi",
   "fromAccount":"cadeosairdrp",
   "authorization":"cadeosairdrp",
   "privateKey":"5KfTg5iPQ3qycY8J4eAgQfxigDPZagGG1Ns2dDbPrVE1oekfKZR",
@@ -13,7 +13,7 @@
   "minimumCap":100,
   "maximumCap":5000000,
   "decimals":4,
-  "snapshotFile":"./20181201_account_snapshot_CADEOSio.csv",
+  "snapshotFile":"./genesis_snapshot.csv",
   "snapshotFileAccountColumn":1,
-  "snapshotFileAmountColumn":2
+  "snapshotFileAmountColumn":3
 }
