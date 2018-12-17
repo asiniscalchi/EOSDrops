@@ -171,13 +171,15 @@ const dropBatch = async (batch, eos, contract, auth, config, tries = 0) => {
 
     let error = null;
 
-    const filters = await pMap(batch, tuple => getBalance(eos, tokenAccount, symbol, tuple), {concurrency:batchSize < 20 ? batchSize : 20});
-    batch = batch.filter(tuple => filters.find(filter => filter.account === tuple.account && !filter.dropped));
+    // console.log(batch)
 
-    if(!batch.length){
-        logger.warn('no batch');
-        return false;
-    }
+    // const filters = await pMap(batch, tuple => getBalance(eos, tokenAccount, symbol, tuple), {concurrency:batchSize < 20 ? batchSize : 20});
+    // batch = batch.filter(tuple => filters.find(filter => filter.account === tuple.account && !filter.dropped));
+
+    // if(!batch.length){
+    //     logger.warn('no batch');
+    //     return false;
+    // }
 
     const dropped = await contract.transaction(tr => batch.map(tuple =>
         tr.transfer(fromAccount, tuple.account, `${tuple.amount} ${symbol}`, memo, auth)
