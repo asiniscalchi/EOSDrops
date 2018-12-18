@@ -184,7 +184,8 @@ const dropBatch = async (batch, eos, contract, auth, config, tries = 0) => {
     const dropped = await contract.transaction(tr => batch.map(tuple =>
         tr.transfer(fromAccount, tuple.account, `${tuple.amount} ${symbol}`, memo, auth)
     )).then(res => res.transaction_id)
-      .catch(err  => { error = err; return false; });
+      .catch(err  => { error = err;
+        console.log("(EE) " + err); return false; });
 
     // Quits on failure to allow restarting from a specified account
     // instead of having to parse the snapshot for sent/unsent.

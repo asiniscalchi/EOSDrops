@@ -8,7 +8,7 @@
   "symbol":"ADE",
   "ratio":0.33,
   "memo":"",
-  "batchSize":50,
+  "batchSize":500,
   "limitCap":0,
   "minimumCap":100,
   "maximumCap":5000000,
